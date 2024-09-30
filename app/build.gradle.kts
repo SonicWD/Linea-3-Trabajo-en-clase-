@@ -50,6 +50,14 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.navigation.testing)
+    implementation(libs.core.ktx)
+    implementation(libs.androidx.ui.test.junit4.android)
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.4.3")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.4.3")
     implementation("androidx.navigation:navigation-compose:2.8.1")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

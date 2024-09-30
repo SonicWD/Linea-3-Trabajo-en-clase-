@@ -18,7 +18,7 @@ fun ScreenB(navController: NavHostController, contacts: List<Contact>) {
         topBar = {
             TopAppBar(
                 title = { Text("Contacts List") },
-                colors = TopAppBarDefaults.smallTopAppBarColors(
+                colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
                     titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
                 )
