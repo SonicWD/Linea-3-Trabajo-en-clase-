@@ -1,44 +1,87 @@
 package Screen.nav
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavHostController
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ScreeenB(navController: NavHostController) {
-    Button(onClick = { navController.navigate("screenA") }) {
-        Text("Go to Screen A")
-    }
+fun ScreenB(navController: NavHostController, contacts: List<Contact>) {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Contacts List") },
+                colors = TopAppBarDefaults.smallTopAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                )
+            )
+        },
+        content = { innerPadding ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                LazyColumn(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
+                ) {
+                    items(contacts) { contact ->
+                        ContactCard(contact)
+                    }
+                }
+                Button(
+                    onClick = { navController.navigate("screenA") },
+                    modifier = Modifier
+                        .padding(vertical = 16.dp)
+                        .fillMaxWidth(0.5f)
+                ) {
+                    Text("Go to Screen A")
+                }
+            }
+        }
+    )
 }
 
 @Composable
-fun ScreenB(navController: NavHostController, contacts: List<Contact>) {
-    Column(
+fun ContactCard(contact: Contact) {
+    Card(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+            .fillMaxWidth()
+            .padding(vertical = 8.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
-        contacts.forEach { contact ->
-            Text(
-                text = "Name: ${contact.firstName}, lastName: ${contact.lastName}, Phone: ${contact.phone}, hobby: ${contact.hobby}",
-                modifier = Modifier.padding(vertical = 8.dp)
-            )
-        }
-        Spacer(modifier = Modifier.height(24.dp))
-        Button(
-            onClick = { navController.navigate("screenA") },
+        Column(
             modifier = Modifier
-                .fillMaxWidth(0.5f)
-                .padding(vertical = 8.dp)
+                .padding(16.dp)
+                .fillMaxWidth()
         ) {
-            Text("Go to Screen A")
+            Text(
+                text = "${contact.firstName} ${contact.lastName}",
+                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.titleMedium
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = "Phone: ${contact.phone}",
+                style = MaterialTheme.typography.bodyMedium
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = "Hobby: ${contact.hobby}",
+                style = MaterialTheme.typography.bodyMedium
+            )
         }
     }
 }
